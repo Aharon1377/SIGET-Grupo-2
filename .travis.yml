@@ -1,6 +1,25 @@
 language: java
+
+addons:
+  sonarcloud:
+    organization: "gestiontareas"
+    token:
+      secure: "cH8NcmGTtWHYTdTaObfPzx5QK7HPaD3gmzpCwrQPk7FQUyXeCW5oeDh59IRz1Kp+odLc6R172e/ooDuREs8slut5NSO0FLbjViIK6Bt+8SsCQXK40TEFyquoLjng6xIdMXbiBgvd3oIdG7js5gpbTI07UIIkeVmJB2cS4gYPWqYfA+R9BAMd2R9QA3PykisNck3q8Z9RV6vionotoCa7/I+SWWraMWum4/f//3B8QMIb8N51qJwIPNnBzONC4DR9idqnOKnSEroYOmzRTG2XWZlBPRACXdcBD+5rbyyjQFxCGYK8kd6zHLh072waHEGnkndRKWkAp8eFj/2IEfZn82SxtsM/u33by0jE6iBbMbwA9VMmrbj3caKZyf9hAacbE45BGDTokRajW6kqz0lxDQmk4GqI3OxqQvSG232JrxrJbvbGahJ0u7CmpFjUYZcq/BVfm58sJVBTdJgJPZ2+CbAmqA0ebVPVt7/F6w2ufCL9juvYGevbgmCm4lxzds9t6Z/0Y/CSV0S9NHgDoOVXRVpasW+Er0Et0DirKuiwm5tnqlv5BYuA5HDGQWxkCrVKaJtoXNUn8Vtliurb9DweZ0Eba7Lr2ZQWHrb5ypK9iVPKDFcxKN1DC126tm8z+TzgOVYO9YFwOMCLKG2MKOYtvqUrp5FeHvvd9aRsNxb/d/U="
+
+install:
+  - npm install
+
 script:
-- mvn clean install
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=Aharon1377_SIGET-Grupo-2
 - mvn test
+
+deploy: &heroku
+        provider: heroku
+        app: siget--equipo2
+        api_key: 18562f60-1231-4327-8b42-88518f1e5dde
+
+server:
+        port: $PORT
+
 before_install:
   - chmod +x mvnw
