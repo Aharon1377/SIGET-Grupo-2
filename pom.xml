@@ -11,8 +11,8 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>SIGET_Grupo_2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<version>3.0</version>
+	<packaging>jar</packaging>
 	<name>SIGET_Grupo_2</name>
 	<description>Proyecto de cuarto curso de ingenieria informatica</description>
 
