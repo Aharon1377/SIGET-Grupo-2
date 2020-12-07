@@ -1,15 +1,12 @@
 
 package com.controller;
 
+import java.math.BigInteger;
 import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,66 +24,69 @@ import io.cucumber.messages.internal.com.google.common.io.Files;
 @CrossOrigin()
 @RestController
 @RequestMapping("usuarios")
-public class UsuarioController { 
+public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@PostMapping("login")
-	public Usuario login(@RequestParam(name = "username") String username, @RequestParam(name = "password") char[] password) throws GeneralSecurityException{
-		
+	public Usuario login(@RequestParam(name = "username") String username,
+			@RequestParam(name = "password") String password) throws GeneralSecurityException {
+
 		Usuario user = this.usuarioRepository.findOneByUsername(username).get();
-		
-		byte salt[] = user.getSalt();
-		
-		PBEKeySpec spec = new PBEKeySpec(password, salt, 1000, 64*8);
-		SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); // we would like this to be "PBKDF2WithHmacSHA512" instead? What Provider implements it?
-		byte[] hash = skf.generateSecret(spec).getEncoded();
-		
-		
 		Usuario aux = null;
-		
-		if(Arrays.equals(hash, user.getHash())) {
-			aux = user;
+		String pwdEncrypted = encriptarMD5(password);
+		if (pwdEncrypted.equals(user.getPassword())) {
+			return user;
+		} else {
+			return aux;
 		}
-		
-		return aux;
-		
+
 	}
-	
+
 	@GetMapping("getAll")
-    public List<Usuario> getAll(){
-        
-        return this.usuarioRepository.findAll();
-    }
+	public List<Usuario> getAll() {
+
+		return this.usuarioRepository.findAll();
+	}
+
 	@PostMapping("createUsuario")
 	public Usuario createUsuario(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") char[] password,
-			@RequestParam(name = "nombre") String nombre,
-			@RequestParam(name = "apellidos") String apellidos,
-			@RequestParam(name = "email") String email,
+			@RequestParam(name = "password") String password, @RequestParam(name = "nombre") String nombre,
+			@RequestParam(name = "apellidos") String apellidos, @RequestParam(name = "email") String email,
 			@RequestParam(name = "telefono") int telefono) throws GeneralSecurityException {
-		
-		
-		SecureRandom random = new SecureRandom();
-		byte salt[] = new byte[64*8]; // use salt size at least as long as hash
-		random.nextBytes(salt);
-		
-		PBEKeySpec spec = new PBEKeySpec(password, salt, 1000, 64*8);
-		SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); // we would like this to be "PBKDF2WithHmacSHA512" instead? What Provider implements it?
-		byte[] hash = skf.generateSecret(spec).getEncoded();
-		
-		
-		return this.usuarioRepository.insert(new Usuario(username, salt,hash,"3",nombre,apellidos,email,telefono));
+
+		return this.usuarioRepository
+				.insert(new Usuario(username, encriptarMD5(password), "3", nombre, apellidos, email, telefono));
 	}
-	
-	
-	
-	/*@PostMapping("createAdmin")
-	public Usuario createAdmin(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password) {
-		return this.usuarioRepository.insert(new Usuario(username, password,"1"));
-	}*/
-	
-	
-	
+
+	/*
+	 * @PostMapping("createAdmin") public Usuario createAdmin(@RequestParam(name =
+	 * "username") String username,
+	 * 
+	 * @RequestParam(name = "password") String password) { return
+	 * this.usuarioRepository.insert(new Usuario(username, password,"1")); }
+	 */
+
+	private static String encriptarMD5(String input) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] messageDigest = md.digest(input.getBytes());
+			BigInteger number = new BigInteger(1, messageDigest);
+			String hashtext = number.toString(16);
+
+			int diff = 32 - hashtext.length();
+			StringBuilder bld = new StringBuilder();
+
+			while (diff > 1) {
+				bld.append("0");
+				diff--;
+			}
+
+			return bld.toString() + hashtext;
+
+		} catch (NoSuchAlgorithmException e) {
+			return "";
+		}
+	}
+
 }
