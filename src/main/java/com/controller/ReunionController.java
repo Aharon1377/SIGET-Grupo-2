@@ -34,6 +34,7 @@ import com.persistence.ReunionRepository;
 	        
 
 	        return this.reunionRepository.findByAsistentesIn(asistentes);
+	        
 	    }
 		
 		
