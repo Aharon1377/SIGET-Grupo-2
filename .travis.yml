@@ -1,6 +1,12 @@
 language: java
 
+jdk:
+  - oraclejdk8u272
+
 addons:
+  apt:
+    packages:
+      - oracle-java8-installer
   sonarcloud:
     organization: "gestiontareas"
     token: "8cc97cc1d73a3f114e96c55e4ea92056edf725d6"
