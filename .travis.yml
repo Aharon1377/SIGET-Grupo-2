@@ -1,6 +1,14 @@
+dist: trusty
+
 language: java
 
+jdk:
+  - oraclejdk8
+
 addons:
+  apt:
+    packages:
+      - oracle-java8-installer
   sonarcloud:
     organization: "gestiontareas"
     token: "8cc97cc1d73a3f114e96c55e4ea92056edf725d6"
@@ -18,7 +26,7 @@ deploy: &heroku
         app: siget-equipo2
         api_key: 18562f60-1231-4327-8b42-88518f1e5dde
         on:
-          branch: Implementar-HTTPS_HDUM2
+          branch: Encriptar-contraseña_HDUM2
 
 server:
         port: $PORT
