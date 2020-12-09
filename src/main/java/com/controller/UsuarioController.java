@@ -21,7 +21,7 @@ import com.persistence.UsuarioRepository;
 
 import io.cucumber.messages.internal.com.google.common.io.Files;
 
-@CrossOrigin()
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
@@ -51,13 +51,13 @@ public class UsuarioController {
 
 	@PostMapping("createUsuario")
 	public Usuario createUsuario(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID, 
-			@RequestParam(name = "nombre") String nombre,
-			@RequestParam(name = "apellidos") String apellidos, @RequestParam(name = "email") String email,
-			@RequestParam(name = "telefono") int telefono) throws GeneralSecurityException {
+			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID,
+			@RequestParam(name = "nombre") String nombre, @RequestParam(name = "apellidos") String apellidos,
+			@RequestParam(name = "email") String email, @RequestParam(name = "telefono") int telefono)
+			throws GeneralSecurityException {
 
 		return this.usuarioRepository
-				.insert(new Usuario(username, encriptarMD5(password), roleID , nombre, apellidos, email, telefono));
+				.insert(new Usuario(username, encriptarMD5(password), roleID, nombre, apellidos, email, telefono));
 	}
 
 	/*
