@@ -13,9 +13,10 @@ public class Reunion {
 	private String horaFin;
 	private String[] asistentes;
 	private String convocante;
+	private String url;
 	
 	public Reunion(String temas, String descripcion, String horaInicio, String horaFin,
-			String[] asistentes, String convocante) {
+			String[] asistentes, String convocante, String url) {
 		super();
 		this.temas = temas;
 		this.descripcion = descripcion;
@@ -23,6 +24,7 @@ public class Reunion {
 		this.horaFin = horaFin;
 		this.asistentes = asistentes;
 		this.convocante = convocante;
+		this.url = url;
 	}
 
 	public String getTemas() {
@@ -73,5 +75,12 @@ public class Reunion {
 		this.convocante = convocante;
 	}
 	
+	public String getURL() {
+		return url;
+	}
+
+	public void setURL(String url) {
+		this.url = url;
+	}
 	
 }
