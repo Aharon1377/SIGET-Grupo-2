@@ -51,12 +51,13 @@ public class UsuarioController {
 
 	@PostMapping("createUsuario")
 	public Usuario createUsuario(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password, @RequestParam(name = "nombre") String nombre,
+			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID, 
+			@RequestParam(name = "nombre") String nombre,
 			@RequestParam(name = "apellidos") String apellidos, @RequestParam(name = "email") String email,
 			@RequestParam(name = "telefono") int telefono) throws GeneralSecurityException {
 
 		return this.usuarioRepository
-				.insert(new Usuario(username, encriptarMD5(password), "3", nombre, apellidos, email, telefono));
+				.insert(new Usuario(username, encriptarMD5(password), roleID , nombre, apellidos, email, telefono));
 	}
 
 	/*
