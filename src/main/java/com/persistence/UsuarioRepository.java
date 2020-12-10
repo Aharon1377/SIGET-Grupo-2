@@ -15,5 +15,9 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 	
 	Optional<Usuario> findOneByUsername(String username);
 	
+	@Query("SELECT roleID FROM Usuario WHERE username=?1") 
+	Optional<Usuario> findAndGetRol(String username);
+	
+	
 	Optional<Usuario> deleteByUsername(String convocante);
 }

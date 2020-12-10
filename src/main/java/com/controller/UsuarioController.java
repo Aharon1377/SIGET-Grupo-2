@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,9 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Usuario;
 import com.persistence.UsuarioRepository;
 
+
 import io.cucumber.messages.internal.com.google.common.io.Files;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin()
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
@@ -48,16 +50,21 @@ public class UsuarioController {
 
 		return this.usuarioRepository.findAll();
 	}
+	@GetMapping("getID")
+	public Optional<Usuario> getID(@RequestParam(name = "username") String username) {
+		Optional<Usuario> pepe = this.usuarioRepository.findOneByUsername(username);
+		return pepe;
+	}
 
 	@PostMapping("createUsuario")
 	public Usuario createUsuario(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID,
-			@RequestParam(name = "nombre") String nombre, @RequestParam(name = "apellidos") String apellidos,
-			@RequestParam(name = "email") String email, @RequestParam(name = "telefono") int telefono)
-			throws GeneralSecurityException {
+			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID, 
+			@RequestParam(name = "nombre") String nombre,
+			@RequestParam(name = "apellidos") String apellidos, @RequestParam(name = "email") String email,
+			@RequestParam(name = "telefono") int telefono) throws GeneralSecurityException {
 
 		return this.usuarioRepository
-				.insert(new Usuario(username, encriptarMD5(password), roleID, nombre, apellidos, email, telefono));
+				.insert(new Usuario(username, encriptarMD5(password), roleID , nombre, apellidos, email, telefono));
 	}
 
 	/*
