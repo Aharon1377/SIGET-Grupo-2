@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.model.Usuario;
 import com.persistence.UsuarioRepository;
+
 
 import io.cucumber.messages.internal.com.google.common.io.Files;
 
@@ -47,6 +49,11 @@ public class UsuarioController {
 	public List<Usuario> getAll() {
 
 		return this.usuarioRepository.findAll();
+	}
+	@GetMapping("getID")
+	public Optional<Usuario> getID(@RequestParam(name = "username") String username) {
+		Optional<Usuario> pepe = this.usuarioRepository.findOneByUsername(username);
+		return pepe;
 	}
 
 	@PostMapping("createUsuario")

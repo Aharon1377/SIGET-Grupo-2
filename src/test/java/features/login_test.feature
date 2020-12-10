@@ -6,7 +6,6 @@ Feature: Login funciona correctamente
 	
 	Examples: 
       | username | password | correcto |
-      | Valentin | ValentinPass | True |
-      | Ismael | IsmaelPass | True |
+      | dani | Daniel123 | True |
       | name3 | pass3 | False |
       | name4 | pass4 | False |

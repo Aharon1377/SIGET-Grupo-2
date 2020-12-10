@@ -52,10 +52,11 @@ import com.persistence.ReunionRepository;
 	    		@RequestParam(name = "horaInicio") String horaInicio,
 	    		@RequestParam(name = "horaFin") String horaFin,
 	    		@RequestParam(name = "asistentes") String[] asistentes,
-	    		@RequestParam(name = "convocante") String convocante){
+	    		@RequestParam(name = "convocante") String convocante,
+	    		@RequestParam(name = "url") String url){
 
 	        return this.reunionRepository.insert(new Reunion(temas,descripcion,horaInicio,
-					horaFin,asistentes,convocante));
+					horaFin,asistentes,convocante,url));
 	    }
 		
 		
