@@ -1,10 +1,17 @@
+dist: trusty
+
 language: java
 
+jdk:
+  - oraclejdk8
+
 addons:
+  apt:
+    packages:
+      - oracle-java8-installer
   sonarcloud:
     organization: "gestiontareas"
-    token:
-      secure: "oRDwNiN2jRg4f33cAVTLU9SXQmFDoLgSSbvUI9zsAg7HzBP1p+8i/IdEfwXqa5JTNtIQNYBjEt7Hz3PZcpNqeTGjeMOT3nClKauJKcSewTfETV0ynm6wzPNNWRAsvqF0thKC9OIVhByhK+dDCMFhsqG+WtMd86nDL8DcJyBH+HOgZize6TAyy1u83VbPEfSPabgfA7bJdvUsSVbuw7F+wJGdhXWi1tVnK3CzEBIBQ8E8SifQzpjkeKHw4r9N9Do2fP//oY4OLOrbKsrZzepmFInKlyDz9BCuX8P1VHuKbyC3P1uqw3xc3h3ewRlWcIr0VLx8+uI7aFPWxLajqVLkZBnbcEOp95PGNUFwmyqy1ca0vRt9BFWx+ox8USYDLBePNEjVfJc4ekIAsE2JVfUzR6hXDG/rL4hCVIyNY28x0MQYcJ6apt9pK8A8e0Oa94CpjKBPE9CjF7KK2dD8Lh4mgACqVRRQrNVkbUBjZE7XOnEf09Elz9/y0c7kVkzfDooklD/yqRjkAKoYVIgz+p8vbBpGx85po/fiVf60AG50TZvSs7G/BeyuomSG8BL5qfXinY0SSlTOLtlrk5mIz50aOACfndk+3BD11lLUBno69LQjB31G9wcKbHIm4JQPm8FKsVsSIeVw2fpfg3NRKDMZWm1a3v3IhkoTN8qzuYaVfpQ="
+    token: "8cc97cc1d73a3f114e96c55e4ea92056edf725d6"
 
 install:
   - npm install
@@ -14,9 +21,12 @@ script:
 - mvn test
 
 deploy: &heroku
+        skip_cleanup: true
         provider: heroku
-        app: siget--equipo2
+        app: siget-equipo2
         api_key: 18562f60-1231-4327-8b42-88518f1e5dde
+        on:
+          branch: HDUM2
 
 server:
         port: $PORT

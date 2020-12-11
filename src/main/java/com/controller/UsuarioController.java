@@ -52,8 +52,7 @@ public class UsuarioController {
 	}
 	@GetMapping("getID")
 	public Optional<Usuario> getID(@RequestParam(name = "username") String username) {
-		Optional<Usuario> pepe = this.usuarioRepository.findOneByUsername(username);
-		return pepe;
+		return this.usuarioRepository.findOneByUsername(username);
 	}
 
 	@PostMapping("createUsuario")
