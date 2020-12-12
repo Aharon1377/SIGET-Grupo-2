@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Reunion;
 import com.persistence.ReunionRepository;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("reuniones")
 public class ReunionController {

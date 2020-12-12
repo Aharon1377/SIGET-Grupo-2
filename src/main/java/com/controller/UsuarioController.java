@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Usuario;
 import com.persistence.UsuarioRepository;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
