@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@ServletComponentScan
 @SpringBootApplication
 @ComponentScan("com.controller")
 @EnableMongoRepositories("com.persistence")
