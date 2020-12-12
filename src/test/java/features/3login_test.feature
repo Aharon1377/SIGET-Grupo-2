@@ -7,5 +7,6 @@ Feature: Login funciona correctamente
 	Examples: 
       | username | password | correcto |
       | victor | Victor123 | True |
+      | Alberto | Alberto11 | True |
       | name3 | pass3 | False |
       | name4 | pass4 | False |

@@ -19,5 +19,5 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 	Optional<Usuario> findAndGetRol(String username);
 	
 	
-	Optional<Usuario> deleteByUsername(String convocante);
+	Optional<Usuario> deleteByUsername(String username);
 }

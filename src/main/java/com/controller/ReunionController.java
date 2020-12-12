@@ -15,60 +15,51 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Reunion;
 import com.persistence.ReunionRepository;
 
-	@CrossOrigin()
-	@RestController
-	@RequestMapping("reuniones")
-	public class ReunionController { 
-		@Autowired
-		private ReunionRepository reunionRepository;
-		
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("api/reuniones")
+public class ReunionController {
+	@Autowired
+	private ReunionRepository reunionRepository;
 
-		@GetMapping("getAll")
-	    public List<Reunion> getAll(){
-	        
-	        return this.reunionRepository.findAll();
-	    }
-		
-		@GetMapping("get")
-	    public List<Reunion> get(@RequestParam(name = "asistentes") String asistentes){
-	        
+	@GetMapping("getAll")
+	public List<Reunion> getAll() {
 
-	        return this.reunionRepository.findByAsistentesIn(asistentes);
-	    }
-		
-		
-		@GetMapping("getHora")
-	    public Optional<Reunion> getHora(@RequestParam(name = "horaInicio") String horaInicio){
-	        
+		return this.reunionRepository.findAll();
+	}
 
-	        return this.reunionRepository.findOneByHoraInicio(horaInicio);
-	    }
-		
-		
-		
-		@PostMapping("create")
-	    public Reunion create(@RequestParam(name = "temas") String temas,
-	    		@RequestParam(name = "descripcion") String descripcion,
-	    		@RequestParam(name = "horaInicio") String horaInicio,
-	    		@RequestParam(name = "horaFin") String horaFin,
-	    		@RequestParam(name = "asistentes") String[] asistentes,
-	    		@RequestParam(name = "convocante") String convocante,
-	    		@RequestParam(name = "url") String url){
+	@GetMapping("get")
+	public List<Reunion> get(@RequestParam(name = "asistentes") String asistentes) {
 
-	        return this.reunionRepository.insert(new Reunion(temas,descripcion,horaInicio,
-					horaFin,asistentes,convocante,url));
-	    }
-		
-		
-		@PostMapping("delete")
-	    public boolean delete(@RequestParam(name = "horaInicio") String horaInicio){
-			
-			Optional<Reunion> reunion = this.reunionRepository.findOneByHoraInicio(horaInicio);
-			
-	        if(!reunion.toString().equals("Optional.empty")) {
-	        	this.reunionRepository.deleteByHoraInicio(horaInicio);
-	        	return true;
-	        }
-	        return false;
-	    }
+		return this.reunionRepository.findByAsistentesIn(asistentes);
+	}
+
+	@GetMapping("getHora")
+	public Optional<Reunion> getHora(@RequestParam(name = "horaInicio") String horaInicio) {
+
+		return this.reunionRepository.findOneByHoraInicio(horaInicio);
+	}
+
+	@PostMapping("create")
+	public Reunion create(@RequestParam(name = "temas") String temas,
+			@RequestParam(name = "descripcion") String descripcion,
+			@RequestParam(name = "horaInicio") String horaInicio, @RequestParam(name = "horaFin") String horaFin,
+			@RequestParam(name = "asistentes") String[] asistentes,
+			@RequestParam(name = "convocante") String convocante, @RequestParam(name = "url") String url) {
+
+		return this.reunionRepository
+				.insert(new Reunion(temas, descripcion, horaInicio, horaFin, asistentes, convocante, url));
+	}
+
+	@PostMapping("delete")
+	public boolean delete(@RequestParam(name = "horaInicio") String horaInicio) {
+
+		Optional<Reunion> reunion = this.reunionRepository.findOneByHoraInicio(horaInicio);
+
+		if (!reunion.toString().equals("Optional.empty")) {
+			this.reunionRepository.deleteByHoraInicio(horaInicio);
+			return true;
+		}
+		return false;
+	}
 }
