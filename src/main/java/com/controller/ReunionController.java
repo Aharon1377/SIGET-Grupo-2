@@ -17,7 +17,7 @@ import com.persistence.ReunionRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("reuniones")
+@RequestMapping("api/reuniones")
 public class ReunionController {
 	@Autowired
 	private ReunionRepository reunionRepository;

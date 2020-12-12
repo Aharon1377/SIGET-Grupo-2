@@ -22,7 +22,7 @@ import com.persistence.UsuarioRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("api/usuarios")
 public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
