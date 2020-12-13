@@ -2,7 +2,6 @@
 package com.controller;
 
 import java.math.BigInteger;
-import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,25 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Usuario;
 import com.persistence.UsuarioRepository;
 
-
-import io.cucumber.messages.internal.com.google.common.io.Files;
-
-@CrossOrigin()
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("api/usuarios")
 public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@PostMapping("login")
 	public Usuario login(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password) throws GeneralSecurityException {
-
-		Usuario user = this.usuarioRepository.findOneByUsername(username).get();
+			@RequestParam(name = "password") String password) throws Throwable {
 		Usuario aux = null;
 		String pwdEncrypted = encriptarMD5(password);
-		if (pwdEncrypted.equals(user.getPassword())) {
-			return user;
+
+		Optional<Usuario> value = this.usuarioRepository.findOneByUsername(username);
+		if (value.isPresent()) {
+			Usuario user = value.get();
+			if (pwdEncrypted.equals(user.getPassword())) {
+				return user;
+			} else {
+				return aux;
+			}
 		} else {
 			return aux;
 		}
@@ -50,6 +51,7 @@ public class UsuarioController {
 
 		return this.usuarioRepository.findAll();
 	}
+
 	@GetMapping("getID")
 	public Optional<Usuario> getID(@RequestParam(name = "username") String username) {
 		return this.usuarioRepository.findOneByUsername(username);
@@ -57,22 +59,14 @@ public class UsuarioController {
 
 	@PostMapping("createUsuario")
 	public Usuario createUsuario(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID, 
-			@RequestParam(name = "nombre") String nombre,
-			@RequestParam(name = "apellidos") String apellidos, @RequestParam(name = "email") String email,
-			@RequestParam(name = "telefono") int telefono) throws GeneralSecurityException {
+			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID,
+			@RequestParam(name = "nombre") String nombre, @RequestParam(name = "apellidos") String apellidos,
+			@RequestParam(name = "email") String email, @RequestParam(name = "telefono") int telefono)
+			throws Throwable {
 
 		return this.usuarioRepository
-				.insert(new Usuario(username, encriptarMD5(password), roleID , nombre, apellidos, email, telefono));
+				.insert(new Usuario(username, encriptarMD5(password), roleID, nombre, apellidos, email, telefono));
 	}
-
-	/*
-	 * @PostMapping("createAdmin") public Usuario createAdmin(@RequestParam(name =
-	 * "username") String username,
-	 * 
-	 * @RequestParam(name = "password") String password) { return
-	 * this.usuarioRepository.insert(new Usuario(username, password,"1")); }
-	 */
 
 	private static String encriptarMD5(String input) {
 		try {
