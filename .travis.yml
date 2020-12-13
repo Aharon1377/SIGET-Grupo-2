@@ -26,7 +26,7 @@ deploy: &heroku
         app: siget-equipo2
         api_key: 18562f60-1231-4327-8b42-88518f1e5dde
         on:
-          branch: HDUM2
+          branch: master
 
 server:
         port: $PORT
