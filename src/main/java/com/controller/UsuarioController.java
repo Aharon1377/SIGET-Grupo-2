@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.model.Usuario;
 import com.persistence.UsuarioRepository;
 
+import exceptions.AccessNotGrantedException;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/usuarios")
@@ -28,8 +30,7 @@ public class UsuarioController {
 
 	@PostMapping("login")
 	public Usuario login(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password) throws Exception {
-		Usuario aux = null;
+			@RequestParam(name = "password") String password) throws AccessNotGrantedException {
 		String pwdEncrypted = encriptarMD5(password);
 
 		Optional<Usuario> value = this.usuarioRepository.findOneByUsername(username);
@@ -38,10 +39,10 @@ public class UsuarioController {
 			if (pwdEncrypted.equals(user.getPassword())) {
 				return user;
 			} else {
-				throw new Exception();
+				throw new AccessNotGrantedException();
 			}
 		} else {
-			throw new Exception();
+			throw new AccessNotGrantedException();
 		}
 
 	}
@@ -61,8 +62,7 @@ public class UsuarioController {
 	public Usuario createUsuario(@RequestParam(name = "username") String username,
 			@RequestParam(name = "password") String password, @RequestParam(name = "roleID") String roleID,
 			@RequestParam(name = "nombre") String nombre, @RequestParam(name = "apellidos") String apellidos,
-			@RequestParam(name = "email") String email, @RequestParam(name = "telefono") int telefono)
-			throws Throwable {
+			@RequestParam(name = "email") String email, @RequestParam(name = "telefono") int telefono){
 
 		return this.usuarioRepository
 				.insert(new Usuario(username, encriptarMD5(password), roleID, nombre, apellidos, email, telefono));
