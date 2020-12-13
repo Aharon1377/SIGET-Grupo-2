@@ -28,7 +28,7 @@ public class UsuarioController {
 
 	@PostMapping("login")
 	public Usuario login(@RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password) throws Throwable {
+			@RequestParam(name = "password") String password) throws Exception {
 		Usuario aux = null;
 		String pwdEncrypted = encriptarMD5(password);
 
@@ -38,10 +38,10 @@ public class UsuarioController {
 			if (pwdEncrypted.equals(user.getPassword())) {
 				return user;
 			} else {
-				return aux;
+				throw new Exception();
 			}
 		} else {
-			return aux;
+			throw new Exception();
 		}
 
 	}
