@@ -18,11 +18,11 @@ public class PasosEliminarReunion {
 	private Reunion reunionAlmacenada;
 	private java.util.Optional<Reunion> resultado;
 	
-	@Given("existe una reunion con {string}, {string}, {string}, {string}, {string} y {string}")
-	public void existe_una_reunion_con_y(String tema, String descripcion, String horaInicio, String horaFin, String asistente, String convocante) {
+	@Given("existe una reunion con {string}, {string}, {string}, {string}, {string}, {string} y {string}")
+	public void existe_una_reunion_con_y(String tema, String descripcion, String horaInicio, String horaFin, String asistente, String convocante, String url) {
 		String [] asistentes = new String[1];
 		asistentes[0] = asistente;
-		this.reunion = new Reunion(tema,descripcion,horaInicio,horaFin,asistentes,convocante);
+		this.reunion = new Reunion(tema,descripcion,horaInicio,horaFin,asistentes,convocante,url);
 		this.reunionAlmacenada = this.reunionRepository.insert(this.reunion);
 	}
 	@When("se elimina de la base de datos.")

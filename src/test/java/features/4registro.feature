@@ -6,7 +6,7 @@ Feature: Registro funciona correctamente
 	
 	Examples: 
       | username | password | roleID | nombre | apellidos | email | telefono |
-      | username1 | roleID1 | password1 | nombre1 | apellido1 | email1 | 625456456 |
-      | username2 | roleID2 | password1 | nombre2 | apellido2 | email2 | 625357357 |
-      | username3 | roleID3 | password1 | nombre3 | apellido3 | email3 | 625159159 |
-      | username4 | roleID4 | password1 | nombre4 | apellido4 | email4 | 625258258 |
+      | username1 | password1 | 1 | nombre1 | apellido1 | email1 | 625456456 |
+      | username2 | password1 | 3 | nombre2 | apellido2 | email2 | 625357357 |
+      | username3 | password1 | 3 | nombre3 | apellido3 | email3 | 625159159 |
+      | username4 | password1 | 3 | nombre4 | apellido4 | email4 | 625258258 |
