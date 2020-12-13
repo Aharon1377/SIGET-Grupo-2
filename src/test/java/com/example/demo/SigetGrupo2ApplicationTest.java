@@ -12,7 +12,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 public class SigetGrupo2ApplicationTest {
 	
 	@Test
-	void defaultTest() {
+	public void defaultTest() {
 		if(1!=1) {
 			fail("Imposible");
 		}
